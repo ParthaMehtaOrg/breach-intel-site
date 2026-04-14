@@ -113,26 +113,78 @@
       color: var(--danger);
     }
     .faq-item {
-      border-bottom: 1px solid var(--border);
-      padding: 1.5rem 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 0.6rem;
+      overflow: hidden;
+      transition: border-color 0.2s var(--ease);
     }
-    .faq-item:last-child { border-bottom: none; }
-    .faq-item h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+    .faq-item:hover { border-color: var(--border-hover); }
+    .faq-item.open { border-color: var(--border-hover); }
+    .faq-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 1.1rem 1.3rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-body);
       color: var(--text);
+      gap: 1rem;
     }
-    .faq-item p {
-      font-size: 0.9rem;
+    .faq-toggle h3 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      line-height: 1.4;
+      margin: 0;
+    }
+    .faq-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      transition: all 0.25s var(--ease);
+      line-height: 1;
+    }
+    .faq-item.open .faq-icon {
+      background: var(--accent-bg);
+      border-color: rgba(255, 107, 0, 0.2);
+      color: var(--accent);
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s var(--ease), padding 0.3s var(--ease);
+    }
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+    }
+    .faq-answer-inner {
+      padding: 0 1.3rem 1.2rem;
+      font-size: 0.88rem;
       color: var(--text-secondary);
       line-height: 1.7;
     }
-    .faq-item code {
+    .faq-answer-inner code {
       background: var(--bg-elevated);
       padding: 0.1rem 0.4rem;
       border-radius: 4px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--accent);
     }
     .data-note {
       text-align: center;
@@ -354,36 +406,60 @@
       </div>
       <div class="fade-in">
         <div class="faq-item">
-          <h3>How do I apply my license key?</h3>
-          <p>Add your key to <code>config.yaml</code> under <code>license_key:</code> or set the <code>BREACH_INTEL_LICENSE_KEY</code> environment variable. Verify with <code>breach-intel doctor</code> — it will show your plan and expiry.</p>
+          <button class="faq-toggle" onclick="toggleFaq(this)">
+            <h3>How do I apply my license key?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">Add your key to <code>config.yaml</code> under <code>license_key:</code> or set the <code>BREACH_INTEL_LICENSE_KEY</code> environment variable. Verify with <code>breach-intel doctor</code> — it will show your plan and expiry.</div></div>
         </div>
         <div class="faq-item">
-          <h3>How quickly do Pro features activate?</h3>
-          <p>We verify your UPI transaction within 1 hour and email your license key. Restart the policy agent with the key set — all Pro features activate immediately.</p>
+          <button class="faq-toggle" onclick="toggleFaq(this)">
+            <h3>How quickly do Pro features activate?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">We verify your UPI transaction within 1 hour and email your license key. Restart the policy agent with the key set — all Pro features activate immediately.</div></div>
         </div>
         <div class="faq-item">
-          <h3>Does the license require internet verification?</h3>
-          <p>No. License verification is fully offline using Ed25519 cryptographic signatures. Your policy agent validates the key locally — no phone-home, no internet required. Suitable for air-gapped, HIPAA, and SOC 2 deployments.</p>
+          <button class="faq-toggle" onclick="toggleFaq(this)">
+            <h3>Does the license require internet verification?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">No. License verification is fully offline using Ed25519 cryptographic signatures. Your policy agent validates the key locally — no phone-home, no internet required. Suitable for air-gapped, HIPAA, and SOC 2 deployments.</div></div>
         </div>
         <div class="faq-item">
-          <h3>Can I use one license on multiple machines?</h3>
-          <p>One Pro license covers one running policy agent instance. For multi-server or clustered deployments, the Enterprise plan includes unlimited instances.</p>
+          <button class="faq-toggle" onclick="toggleFaq(this)">
+            <h3>Can I use one license on multiple machines?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">One Pro license covers one running policy agent instance. For multi-server or clustered deployments, the Enterprise plan includes unlimited instances.</div></div>
         </div>
         <div class="faq-item">
-          <h3>Do I need to modify my agent code?</h3>
-          <p>No. Breach Intel uses a persistent Python hook (<code>sitecustomize.py</code>) to auto-patch supported frameworks at import time. Your agent code stays completely untouched on all plans.</p>
+          <button class="faq-toggle" onclick="toggleFaq(this)">
+            <h3>Do I need to modify my agent code?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">No. Breach Intel uses a persistent Python hook (<code>sitecustomize.py</code>) to auto-patch supported frameworks at import time. Your agent code stays completely untouched on all plans.</div></div>
         </div>
         <div class="faq-item">
-          <h3>What's your refund policy?</h3>
-          <p>If you're not satisfied, email us within 7 days of purchase for a full refund. No questions asked.</p>
+          <button class="faq-toggle" onclick="toggleFaq(this)">
+            <h3>What's your refund policy?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">If you're not satisfied, email us within 7 days of purchase for a full refund. No questions asked.</div></div>
         </div>
         <div class="faq-item">
-          <h3>How long are license keys valid?</h3>
-          <p>All license keys are valid for 1 year from the date of issue. You'll receive a renewal reminder 30 days before expiry.</p>
+          <button class="faq-toggle" onclick="toggleFaq(this)">
+            <h3>How long are license keys valid?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">All license keys are valid for 1 year from the date of issue. You'll receive a renewal reminder 30 days before expiry.</div></div>
         </div>
         <div class="faq-item">
-          <h3>What happens if the policy agent goes down?</h3>
-          <p>The SDK has a 5-second timeout and fails silently. Your agent continues running normally — breach logging resumes when the policy agent recovers. No agent downtime, ever.</p>
+          <button class="faq-toggle" onclick="toggleFaq(this)">
+            <h3>What happens if the policy agent goes down?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">The SDK has a 5-second timeout and fails silently. Your agent continues running normally — breach logging resumes when the policy agent recovers. No agent downtime, ever.</div></div>
         </div>
       </div>
     </div>
@@ -410,6 +486,16 @@
 
   <script src="js/main.js"></script>
   <script>
+    // FAQ accordion
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const wasOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      // Toggle clicked
+      if (!wasOpen) item.classList.add('open');
+    }
+
     // Update Google Pay link based on plan selection
     const planSelect = document.getElementById('pay-plan');
     const gpayLink = document.getElementById('gpay-link');
