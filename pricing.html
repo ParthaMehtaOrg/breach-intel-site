@@ -261,11 +261,9 @@
 
       <div class="payment-section fade-in">
         <div style="text-align:center;">
-          <div class="upi-id">parthamehta123@oksbi</div>
-          <div class="qr-placeholder">
-            QR Code<br><span style="font-weight:400;font-size:0.72rem;color:#666;">Scan to pay via any UPI app</span>
-          </div>
-          <a href="upi://pay?pa=parthamehta123@oksbi&pn=BreachIntel&am=999&cu=INR&tn=BreachIntel%20Pro" class="gpay-btn" id="gpay-link">⚡ Open Google Pay</a>
+          <div class="upi-id">parthamehta10@okhdfcbank</div>
+          <img src="upi-qr.png" alt="UPI QR Code — Scan to pay" style="width:180px;height:180px;border-radius:var(--radius-md);margin:1.2rem auto;">
+          <a href="upi://pay?pa=parthamehta10@okhdfcbank&pn=BreachIntel&am=999&cu=INR&tn=BreachIntel%20Pro" class="gpay-btn" id="gpay-link">⚡ Open Google Pay</a>
           <p style="font-size:0.72rem;color:var(--text-tertiary);margin-top:0.6rem;">Works with GPay, PhonePe, Paytm and any UPI app</p>
         </div>
 
@@ -423,7 +421,7 @@
     if (planSelect && gpayLink) {
       planSelect.addEventListener('change', function() {
         const amt = amounts[this.value] || 999;
-        gpayLink.href = `upi://pay?pa=parthamehta123@oksbi&pn=BreachIntel&am=${amt}&cu=INR&tn=BreachIntel%20${this.value || 'Pro'}`;
+        gpayLink.href = `upi://pay?pa=parthamehta10@okhdfcbank&pn=BreachIntel&am=${amt}&cu=INR&tn=BreachIntel%20${this.value || 'Pro'}`;
       });
     }
 
